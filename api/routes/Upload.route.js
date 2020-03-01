@@ -29,7 +29,7 @@ route.post("/singleFile", userMiddleware.checkAuth, userMiddleware.isAdmin_isTes
     })
 }, middleware.checkSingleUpload, controller.singleUpload);
 //upload multi
-route.post("/multipleFiles", userMiddleware.checkAuth, userMiddleware.isAdmin_isTester, upload.any(), middleware.checkMultipleUpload, controller.multipleUpload);
+route.post("/multipleFiles", userMiddleware.checkAuth, userMiddleware.isAdmin_isTester, upload.any(), controller.multipleUpload);
 //delete singple, multiple
 route.delete("/deleteSingle", userMiddleware.checkAuth, userMiddleware.isAdmin_isTester, controller.deleteSingle);
 route.delete("/deleteMultiple", userMiddleware.checkAuth, userMiddleware.isAdmin_isTester, controller.deleteMultiple);
