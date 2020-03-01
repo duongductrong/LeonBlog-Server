@@ -13,7 +13,7 @@ let config1 = {
     api_secret: "4qF1rDoxVIb6MS4ickJkuUaT9UI"
 }
 
-cloudinary.config(config1);
+cloudinary.config(config);
 
 //option setting first
 let options = {
@@ -57,7 +57,7 @@ let self = module.exports = {
     },
     uploadMultiple: (file) => {
         return new Promise((resolve, reject) => {
-            return cloudinary.uploader.upload(file, { folder: "blog" })
+            cloudinary.uploader.upload(file, { folder: "blog" })
             .then(result => {
                 fs.unlinkSync(file) //upload done, delete path
                 resolve({
@@ -69,9 +69,9 @@ let self = module.exports = {
                     url: result.url,
                     secure_url: result.secure_url,
                     original_filename: result.original_filename,
-                    thum1: self.resizeImage(result.public_id, 200, 200),
-                    main: self.resizeImage(result.public_id, 500, 500),
-                    thum2: self.resizeImage(result.public_id, 300, 300)
+                    // thum1: self.resizeImage(result.public_id, 200, 200),
+                    // main: self.resizeImage(result.public_id, 500, 500),
+                    // thum2: self.resizeImage(result.public_id, 300, 300)
                 }) //resolve result
             })
             .catch(err => {
