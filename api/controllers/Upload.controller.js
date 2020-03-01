@@ -48,10 +48,15 @@ module.exports.singleUpload = async (req, res) => {
 module.exports.multipleUpload = (req, res) => {
     const { files } = res.locals;
     
+    res.json(Notification.message("Lỗi ở đây 1", "error", 400, { error: JSON.stringify(files) }))
+
     //Call api to upload some file
     let uploaded = files.map(file => {
         return cloudinary.uploadMultiple(file.path)
     });
+
+    res.json(Notification.message("Lỗi ở đây 2", "error", 400, { error: JSON.stringify(uploaded) }))
+    return
 
     //Take promise get result
     Promise.all(uploaded)
