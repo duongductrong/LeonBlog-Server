@@ -6,7 +6,14 @@ let config = {
     api_key: "945986318553276",
     api_secret: "nD3j9X_aOcx_m4jM6q999geo1iA"
 }
-cloudinary.config(config);
+
+let config1 = {
+    cloud_name: "xskill-store",
+    api_key: "451788234465945",
+    api_secret: "4qF1rDoxVIb6MS4ickJkuUaT9UI"
+}
+
+cloudinary.config(config1);
 
 //option setting first
 let options = {
