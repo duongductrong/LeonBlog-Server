@@ -59,7 +59,7 @@ module.exports.checkGetCategory = async (req, res, next) => {
         return;
     }
 
-    let blog = await BLOG_MODEL_MONGOOSE.find({categories: { $in: [category._id] }}); //Find all blog have a exists this category
+    let blog = await BLOG_MODEL_MONGOOSE.find({categories: { $in: [category._id] }}).sort({_id: "desc"}); //Find all blog have a exists this category
     const total = [...blog].length; // counts all blog a exists this category
 
     //get categories
