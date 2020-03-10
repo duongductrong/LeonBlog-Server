@@ -63,11 +63,12 @@ module.exports.checkGetUser = async (req, res, next) => {
 }
 
 module.exports.checkCreate = async (req, res, next) => {
+    let { userLogin } = res.locals;
     let { username, password, firstname, lastname, email, address, social = []} = req.body;
     let errors = {};
-    let usersList = await USER_MODEL_MONGOOSE.countDocuments();
-    
-    if(usersList > 0) {
+    let usersList = await USER_MODEL_MONGOOSE.countDocuments(); //Counts all user if it's equal 0 -> accept create, else Throw error
+
+    if(usersList > 0 && userLogin.permission !== "admin") {
         res.json(Notification.message("Vui lòng liên hệ chủ website để được cấp tài khoản", "error", 400));
         return;
     }
