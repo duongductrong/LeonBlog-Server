@@ -20,8 +20,11 @@ module.exports.checkGetBlogs = async (req, res, next) => {
     let pagination = Pagination(page, onpage);
 
     //handle route get blogs
-    let blogs = await BLOG_MODEL_MONGOOSE.find({disable: disable}).sort({_id: "desc"}); //get all blogs
-    const total = await BLOG_MODEL_MONGOOSE.countDocuments().where("disable", disable); //counts all blogs
+    let blogs = await BLOG_MODEL_MONGOOSE.find({disable: disable})
+    .sort({_id: "desc"}); //get all blogs
+    
+    const total = await BLOG_MODEL_MONGOOSE.countDocuments()
+    .where("disable", disable); //counts all blogs
     
     //get categories
     for(let i = 0; i < blogs.length; i++) {
@@ -51,7 +54,7 @@ module.exports.checkGetBlog = async (req, res, next) => {
     // let blog = await Checking.isExists(url, BLOG_MODEL_MONGOOSE, "url");
     
     let blog = await BLOG_MODEL_MONGOOSE.findOne({url : url}) //Find blog with URL
-    .where("disable", disable); //Condition disable status 
+    .where("disable", disable) //Condition disable status
 
     //check exists
     if(!blog) {
