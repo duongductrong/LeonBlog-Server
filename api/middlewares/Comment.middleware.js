@@ -5,7 +5,14 @@ const Notification = require("../modules/Notification");
 const Checking = require("../modules/Checking");
 
 module.exports.checkGetComments = async (req, res, next) => {
-    const { page = 1, onpage = 10, offset, limit, disable = false } = req.query;
+    const { 
+        page = 1, 
+        onpage = 10, 
+        offset, 
+        limit, 
+        disable = false,
+        blogId=null
+    } = req.query;
     
     //---check number request query
     [page, onpage].forEach((e) => {
@@ -19,8 +26,23 @@ module.exports.checkGetComments = async (req, res, next) => {
     let pagination = Pagination(page, onpage);
 
     //---get all
-    let comments = await COMMENT_MODEL_MONGOOSE.find({disable: disable}).sort({_id: "desc"}); //get all comments
-    const total = await COMMENT_MODEL_MONGOOSE.countDocuments().where("disable", disable); //counts all comments
+    let comments, total;
+
+    //Get the comments of the blog by id
+    if(blogId) {
+        comments = await COMMENT_MODEL_MONGOOSE.find({disable: disable}) //get all comments
+        .where("blog", blogId)
+        .sort({_id: "desc"});
+
+        total = await COMMENT_MODEL_MONGOOSE.countDocuments() //counts all comments
+        .where("disable", disable)
+        .where("blog", blogId);
+    }
+    else {
+        comments = await COMMENT_MODEL_MONGOOSE.find({disable: disable}).sort({_id: "desc"}); //get all comments
+
+        total = await COMMENT_MODEL_MONGOOSE.countDocuments().where("disable", disable); //counts all comments
+    }
     
     comments = comments.slice(pagination.start, pagination.end);
 
